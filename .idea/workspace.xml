@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3a58677-e57a-45a6-86e7-af0772dffad2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/BoardReport.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.as" afterPath="$PROJECT_DIR$/src/Main.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReportGenerator.fla" afterPath="$PROJECT_DIR$/ReportGenerator.fla" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/BoardReport.as" afterPath="$PROJECT_DIR$/src/pages/BoardReport.as" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,9 +34,11 @@
       <file leaf-file-name="BoardReport.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/BoardReport.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="728">
+              <caret line="48" column="39" lean-forward="false" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+              <folding>
+                <element signature="e#76#109#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -568,12 +568,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1495781090698</updated>
-      <workItem from="1495781094222" duration="3115000" />
+      <workItem from="1495781094222" duration="4039000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3115000" />
+    <option name="totallyTimeSpent" value="4039000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="311" y="30" width="1396" height="957" extended-state="0" />
@@ -636,9 +636,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/BoardReport.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="728">
+          <caret line="48" column="39" lean-forward="false" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+          <folding>
+            <element signature="e#76#109#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
