@@ -12,9 +12,14 @@ public class GetBoardAction extends RestDoaServiceCaller
         super("https://api.trello.com/1/boards/JDJxNfgj/actions",data,true,false,null,true);
     }
 
-    public function load(limit:uint):void
+    public function load(limit:uint,before:Date=null):void
     {
-        super.loadParam({limit:limit,key:Main.apiKey,token:Main.tocken});
+        var beforDate:String ;
+        if(before!=null)
+        {
+            beforDate = ServerDate.dateToServerDate2(before,false);
+        }
+        super.loadParam({limit:limit,key:Main.apiKey,token:Main.tocken,before:beforDate});
     }
 }
 }

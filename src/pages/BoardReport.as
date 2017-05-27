@@ -10,9 +10,12 @@ import flash.display.MovieClip;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 
+import pages.model.UserReport;
+
 import restDoaService.RestDoaEvent;
 
 import services.GetBoardAction;
+import services.GetBoardActionsRespond;
 
 public class BoardReport extends MovieClip{
 
@@ -26,10 +29,17 @@ public class BoardReport extends MovieClip{
 
     private var service_getBoardActivitis:GetBoardAction ;
 
+    private var reportTF:TextField ;
+
+    private const reportPageSize:uint = 1000 ;
+
+    private var userReports:Vector.<UserReport> ;
+
     public function BoardReport() {
         super() ;
         urlField = Obj.get("url_txt",this) ;
         getReportMC = Obj.get("get_report_mc",this) ;
+        reportTF = Obj.get("report_txt",this);
 
         boardURL = GlobalStorage.load(id_boardURL) ;
         if(boardURL==null)
@@ -45,10 +55,6 @@ public class BoardReport extends MovieClip{
         service_getBoardActivitis.addEventListener(RestDoaEvent.SERVER_RESULT, reportLoaded)
     }
 
-    private function reportLoaded(event:RestDoaEvent):void {
-        trace("Report loaded : "+service_getBoardActivitis.data.length)
-    }
-
     private function getReport(event:MouseEvent):void
     {
         //      https://trello.com/b/JDJxNfgj/azta-bazar
@@ -60,9 +66,67 @@ public class BoardReport extends MovieClip{
             GlobalStorage.save(id_boardURL,urlField.text);
             myID = foundedID[1];
             trace("foundedID : "+myID);
-
-            service_getBoardActivitis.load(1000);
+            userReports = new Vector.<UserReport>();
+            reportTF.text = "Please wait...";
+            service_getBoardActivitis.load(reportPageSize);
         }
+    }
+
+    private function reportLoaded(event:RestDoaEvent):void {
+        var l:int = service_getBoardActivitis.data.length ;
+        trace("Report loaded : "+l);
+        if(l>0) {
+            trace("First report is : " + service_getBoardActivitis.data[0].id);
+        }
+        for(var i:int = 0 ; i<l ; i++)
+        {
+            var foundedReportUnit:UserReport ;
+            trace("Action id : "+service_getBoardActivitis.data[i].id);
+            for(var j:int = 0 ; j<userReports.length ; j++)
+            {
+                if(userReports[j].userId == service_getBoardActivitis.data[i].idMemberCreator)
+                {
+                    foundedReportUnit = userReports[j] ;
+                    break ;
+                }
+            }
+            if(foundedReportUnit==null)
+            {
+                foundedReportUnit = new UserReport();
+                foundedReportUnit.userId = service_getBoardActivitis.data[i].idMemberCreator ;
+                foundedReportUnit.userName = service_getBoardActivitis.data[i].memberCreator.fullName ;
+                trace("New user is : "+foundedReportUnit.userName);
+                userReports.push(foundedReportUnit);
+            }
+            else
+            {
+                trace("Founded user is : "+foundedReportUnit.userName);
+            }
+            foundedReportUnit.userReports.push(service_getBoardActivitis.data[i]);
+        }
+        if(l==reportPageSize)
+        {
+            trace("load more services now ...");
+            var lastReport:GetBoardActionsRespond = service_getBoardActivitis.data[l-1] ;
+            trace("Last report date : "+lastReport.date)
+            service_getBoardActivitis.load(reportPageSize,service_getBoardActivitis.data[l-1].date);
+        }
+        else
+        {
+            generateReport();
+        }
+    }
+
+    private function generateReport():void {
+       reportTF.text = '' ;
+       var totalHoures:Number = 0 ;
+       for(var i:int = 0 ; i<userReports.length ; i++)
+       {
+           var userHoures:Number = userReports[i].getHoures();
+           totalHoures+=userHoures ;
+           reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+'\n');
+       }
+        reportTF.appendText("Total houres on project : "+totalHoures.toString());
     }
 }
 }
