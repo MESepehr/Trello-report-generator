@@ -8,6 +8,7 @@ import dataManager.GlobalStorage;
 
 import flash.display.MovieClip;
 import flash.events.MouseEvent;
+import flash.system.System;
 import flash.text.TextField;
 
 import pages.model.UserReport;
@@ -84,12 +85,12 @@ public class BoardReport extends MovieClip{
         {
             foundedReportUnit = null ;
             currentReport = service_getBoardActivitis.data[i];
-            trace("Action id : "+currentReport.id);
-            trace("idMemberCreator : "+currentReport.idMemberCreator);
-            trace("fullName : "+currentReport.memberCreator.fullName);
+            //trace("Action id : "+currentReport.id);
+            //trace("idMemberCreator : "+currentReport.idMemberCreator);
+           // trace("fullName : "+currentReport.memberCreator.fullName);
             for(var j:int = 0 ; j<userReports.length ; j++)
             {
-                trace("Check : "+userReports[j].userName+'  '+userReports[j].userId);
+                //trace("Check : "+userReports[j].userName+'  '+userReports[j].userId);
                 if(userReports[j].userId == currentReport.idMemberCreator)
                 {
                     foundedReportUnit = userReports[j] ;
@@ -101,12 +102,12 @@ public class BoardReport extends MovieClip{
                 foundedReportUnit = new UserReport();
                 foundedReportUnit.userId = currentReport.idMemberCreator ;
                 foundedReportUnit.userName = currentReport.memberCreator.fullName ;
-                trace("New user is : "+foundedReportUnit.userName);
+                //trace("New user is : "+foundedReportUnit.userName);
                 userReports.push(foundedReportUnit);
             }
             else
             {
-                trace("Founded user is : "+foundedReportUnit.userName);
+                //trace("Founded user is : "+foundedReportUnit.userName);
             }
             foundedReportUnit.userReports.push(service_getBoardActivitis.data[i]);
         }
@@ -119,6 +120,7 @@ public class BoardReport extends MovieClip{
         }
         else
         {
+            service_getBoardActivitis.cansel();
             generateReport();
         }
     }
@@ -130,9 +132,9 @@ public class BoardReport extends MovieClip{
        {
            var userHoures:Number = userReports[i].getHoures();
            totalHoures+=userHoures ;
-           reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+'\n');
+           reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+' Hrs\n');
        }
-        reportTF.appendText("Total houres on project : "+totalHoures.toString());
+        reportTF.appendText("Total houres on project : "+totalHoures.toString()+' Hrs');
     }
 }
 }
