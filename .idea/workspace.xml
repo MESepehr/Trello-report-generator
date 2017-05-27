@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3a58677-e57a-45a6-86e7-af0772dffad2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/model/UserReport.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReportGenerator.fla" afterPath="$PROJECT_DIR$/ReportGenerator.fla" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/BoardReport.as" afterPath="$PROJECT_DIR$/src/pages/BoardReport.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/GetBoardAction.as" afterPath="$PROJECT_DIR$/src/services/GetBoardAction.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/GetBoardActionsRespond.as" afterPath="$PROJECT_DIR$/src/services/GetBoardActionsRespond.as" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,11 +34,21 @@
       <file leaf-file-name="BoardReport.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/BoardReport.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="83" column="71" lean-forward="false" selection-start-line="83" selection-start-column="71" selection-end-line="83" selection-end-column="71" />
+            <state relative-caret-position="333">
+              <caret line="84" column="38" lean-forward="false" selection-start-line="84" selection-start-column="38" selection-end-line="84" selection-end-column="38" />
               <folding>
                 <element signature="e#76#109#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GetBoardActionsRespond.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/GetBoardActionsRespond.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -700,12 +706,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1495781090698</updated>
-      <workItem from="1495781094222" duration="8747000" />
+      <workItem from="1495781094222" duration="9628000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8747000" />
+    <option name="totallyTimeSpent" value="9628000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="311" y="30" width="1605" height="957" extended-state="0" />
@@ -808,14 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/GetBoardActionsRespond.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/services/GetBoardAction.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -856,10 +854,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/GetBoardActionsRespond.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/BoardReport.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="83" column="71" lean-forward="false" selection-start-line="83" selection-start-column="71" selection-end-line="83" selection-end-column="71" />
+        <state relative-caret-position="333">
+          <caret line="84" column="38" lean-forward="false" selection-start-line="84" selection-start-column="38" selection-end-line="84" selection-end-column="38" />
           <folding>
             <element signature="e#76#109#0" expanded="true" />
           </folding>

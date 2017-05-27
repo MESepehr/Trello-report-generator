@@ -74,17 +74,23 @@ public class BoardReport extends MovieClip{
 
     private function reportLoaded(event:RestDoaEvent):void {
         var l:int = service_getBoardActivitis.data.length ;
+        var currentReport:GetBoardActionsRespond ;
+        var foundedReportUnit:UserReport ;
         trace("Report loaded : "+l);
         if(l>0) {
             trace("First report is : " + service_getBoardActivitis.data[0].id);
         }
         for(var i:int = 0 ; i<l ; i++)
         {
-            var foundedReportUnit:UserReport ;
-            trace("Action id : "+service_getBoardActivitis.data[i].id);
+            foundedReportUnit = null ;
+            currentReport = service_getBoardActivitis.data[i];
+            trace("Action id : "+currentReport.id);
+            trace("idMemberCreator : "+currentReport.idMemberCreator);
+            trace("fullName : "+currentReport.memberCreator.fullName);
             for(var j:int = 0 ; j<userReports.length ; j++)
             {
-                if(userReports[j].userId == service_getBoardActivitis.data[i].idMemberCreator)
+                trace("Check : "+userReports[j].userName+'  '+userReports[j].userId);
+                if(userReports[j].userId == currentReport.idMemberCreator)
                 {
                     foundedReportUnit = userReports[j] ;
                     break ;
@@ -93,8 +99,8 @@ public class BoardReport extends MovieClip{
             if(foundedReportUnit==null)
             {
                 foundedReportUnit = new UserReport();
-                foundedReportUnit.userId = service_getBoardActivitis.data[i].idMemberCreator ;
-                foundedReportUnit.userName = service_getBoardActivitis.data[i].memberCreator.fullName ;
+                foundedReportUnit.userId = currentReport.idMemberCreator ;
+                foundedReportUnit.userName = currentReport.memberCreator.fullName ;
                 trace("New user is : "+foundedReportUnit.userName);
                 userReports.push(foundedReportUnit);
             }
