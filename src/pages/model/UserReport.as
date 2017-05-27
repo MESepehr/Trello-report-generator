@@ -14,7 +14,7 @@ public class UserReport {
 
     private const houreUnit:uint = 1000*60*60 ;
 
-    private const maxUnit:uint = houreUnit*2 ;
+    private const maxUnit:uint = houreUnit*3.5 ;
 
     public function UserReport() {
     }
