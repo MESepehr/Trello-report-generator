@@ -52,8 +52,6 @@ public class BoardReport extends MovieClip{
         getReportMC.buttonMode = true ;
         getReportMC.addEventListener(MouseEvent.CLICK, getReport);
 
-        service_getBoardActivitis = new GetBoardAction();
-        service_getBoardActivitis.addEventListener(RestDoaEvent.SERVER_RESULT, reportLoaded)
     }
 
     private function getReport(event:MouseEvent):void
@@ -69,6 +67,17 @@ public class BoardReport extends MovieClip{
             trace("foundedID : "+myID);
             userReports = new Vector.<UserReport>();
             reportTF.text = "Please wait...";
+			
+			if(service_getBoardActivitis)
+			{
+				service_getBoardActivitis.removeEventListener(RestDoaEvent.SERVER_RESULT, reportLoaded)
+				service_getBoardActivitis.cansel();
+				service_getBoardActivitis = null ;
+			}
+			
+			service_getBoardActivitis = new GetBoardAction(myID);
+			service_getBoardActivitis.addEventListener(RestDoaEvent.SERVER_RESULT, reportLoaded)
+			
             service_getBoardActivitis.load(reportPageSize);
         }
     }

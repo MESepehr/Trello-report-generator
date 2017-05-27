@@ -8,8 +8,8 @@ public class GetBoardAction extends RestDoaServiceCaller
 {
     public var data:Vector.<GetBoardActionsRespond> = new Vector.<GetBoardActionsRespond>();
 
-    public function GetBoardAction() {
-        super("https://api.trello.com/1/boards/JDJxNfgj/actions",data,true,false,null,true);
+    public function GetBoardAction(boardId:String) {
+        super("https://api.trello.com/1/boards/"+boardId+"/actions",data,true,false,null,true);
     }
 
     public function load(limit:uint,before:Date=null):void
