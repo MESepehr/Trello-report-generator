@@ -36,8 +36,15 @@ public class UserReport {
             {
                 //Next tasks
                 var deltaTime:Number = currentTime-lastTime ;
+				if(deltaTime>maxUnit)
+				{
+					totalTime+=houreUnit ;
+				}
+				else
+				{
+	                totalTime += deltaTime ;
+				}
                 //trace(">>"+deltaTime+' >>>> '+(deltaTime/houreUnit));
-                totalTime+=Math.min(maxUnit,deltaTime);
             }
             lastTime = currentTime ;
         }
