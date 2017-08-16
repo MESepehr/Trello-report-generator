@@ -72,6 +72,7 @@ public class BoardReport extends MovieClip{
 		toMC.setUp("To:",toDate,true);
 		
 		fromMC.addEventListener(Event.CHANGE,updateFromToDateAndReport);
+		toMC.addEventListener(Event.CHANGE,updateFromToDateAndReport);
 
         boardURL = GlobalStorage.load(id_boardURL) ;
         if(boardURL==null)
@@ -91,6 +92,7 @@ public class BoardReport extends MovieClip{
 		{
 			fromDate = fromMC.data ;
 			toDate = toMC.data ;
+			toDate.date++ ;
 			
 			generateReport(false);
 		}
@@ -183,6 +185,7 @@ public class BoardReport extends MovieClip{
 		{
 			fromDate = new Date(0);
 			toDate = new Date();
+			toDate.date++ ;
 			
 			fromMC.update(fromDate);
 			toMC.update(toDate);

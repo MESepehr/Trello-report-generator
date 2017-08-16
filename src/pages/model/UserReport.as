@@ -14,7 +14,7 @@ public class UserReport {
 
     private const houreUnit:uint = 1000*60*60 ;
 
-    private const maxUnit:uint = houreUnit*3.5 ;
+    private const maxUnit:uint = houreUnit*4.5 ;
 	
 	/**This variable will generate when you call getHoures once. it is based on miliseconds*/
 	public var dayToDateReport:Vector.<Number> ;
@@ -24,7 +24,7 @@ public class UserReport {
 
     public function getHoures(fromDate:Date,toDate:Date):Number
     {
-		trace("Control date : "+fromDate);
+		//trace("Control date : "+fromDate+' , '+toDate);
         var lastTime:Number = 0 ;
 		var lastDate:Date ;
         var totalTime:Number = 0 ;
@@ -48,6 +48,7 @@ public class UserReport {
             {
                 //First task
 				dayToDateReport.push(0);
+				//trace("- First task : "+currentTime);
             }
             else
             {
@@ -56,12 +57,14 @@ public class UserReport {
 				if(deltaTime>maxUnit)
 				{
 					totalTime+=houreUnit ;
+					//trace("- The tasks delay is passed from maximom length ..."+totalTime+" >> delta time is : "+deltaTime );
 					dayToDateReport[dayToDateReport.length-1]+=houreUnit ;
 					dayToDateReport.push(0);
 				}
 				else
 				{
 	                totalTime += deltaTime ;
+					//trace("- Two close task time : "+totalTime);
 					dayToDateReport[dayToDateReport.length-1]+=deltaTime ;
 				}
                 //trace(">>"+deltaTime+' >>>> '+(deltaTime/houreUnit));
@@ -69,7 +72,7 @@ public class UserReport {
             lastTime = currentTime ;
 			lastDate = currentDate ;
         }
-		trace("Day raeport is : "+dayToDateReport);
+		//trace("Total time : "+totalTime);
         //trace(userName+" saved taskes : "+totalTime);
 		if(currentTime!=0)
         	totalTime+=houreUnit;
