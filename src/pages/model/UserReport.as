@@ -22,9 +22,13 @@ public class UserReport {
     public function UserReport() {
     }
 
-    public function getHoures(fromDate:Date,toDate:Date):Number
+    public function getHoures(fromDate:Date,toDate:Date,newMaxUnitInMiliSeconds:Number):Number
     {
 		//trace("Control date : "+fromDate+' , '+toDate);
+		if(isNaN(newMaxUnitInMiliSeconds))
+		{
+			newMaxUnitInMiliSeconds = maxUnit ;
+		}
         var lastTime:Number = 0 ;
 		var lastDate:Date ;
         var totalTime:Number = 0 ;
@@ -54,7 +58,7 @@ public class UserReport {
             {
                 //Next tasks
                 var deltaTime:Number = currentTime-lastTime ;
-				if(deltaTime>maxUnit)
+				if(deltaTime>newMaxUnitInMiliSeconds)
 				{
 					totalTime+=houreUnit ;
 					//trace("- The tasks delay is passed from maximom length ..."+totalTime+" >> delta time is : "+deltaTime );
@@ -72,10 +76,10 @@ public class UserReport {
             lastTime = currentTime ;
 			lastDate = currentDate ;
         }
-		//trace("Total time : "+totalTime);
         //trace(userName+" saved taskes : "+totalTime);
 		if(currentTime!=0)
         	totalTime+=houreUnit;
+		//trace("Total time : "+totalTime);
         //trace(userName+" last taskes : "+totalTime);
         return Math.round((totalTime/houreUnit));
     }

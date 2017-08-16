@@ -48,12 +48,23 @@ public class BoardReport extends MovieClip{
 	private var repostDiagram:MovieClip ;
 	
 	private var piDiagram:MovieClip ;
+	
+	private var maxDelayTF:TextField ;
+	
+	private var reGenerateMC:MovieClip ;
 
     public function BoardReport() {
         super() ;
         urlField = Obj.get("url_txt",this) ;
         getReportMC = Obj.get("get_report_mc",this) ;
         reportTF = Obj.get("report_txt",this);
+		
+		reGenerateMC = Obj.get("regenerate_mc",this);
+		reGenerateMC.buttonMode = true ;
+		reGenerateMC.addEventListener(MouseEvent.CLICK,regenerateReport);
+		reGenerateMC.visible = false ;
+		
+		maxDelayTF = Obj.get("delay_mc",this);
 		
 		repostDiagram = Obj.get("diagram_mc",this);
 		repostDiagram.visible = false ;
@@ -84,6 +95,12 @@ public class BoardReport extends MovieClip{
         getReportMC.buttonMode = true ;
         getReportMC.addEventListener(MouseEvent.CLICK, getReport);
     }
+	
+	/**Regererate report*/
+	protected function regenerateReport(event:MouseEvent):void
+	{
+		generateReport(false);
+	}
 	
 	protected function updateFromToDateAndReport(event:Event):void
 	{
@@ -181,6 +198,7 @@ public class BoardReport extends MovieClip{
 
     private function generateReport(resetDate:Boolean=true):void
 	{
+		reGenerateMC.visible = true ;
 		if(resetDate)
 		{
 			fromDate = new Date(0);
@@ -199,7 +217,7 @@ public class BoardReport extends MovieClip{
 	   
        for(var i:int = 0 ; i<userReports.length ; i++)
        {
-           var userHoures:Number = userReports[i].getHoures(fromDate,toDate);
+           var userHoures:Number = userReports[i].getHoures(fromDate,toDate,Number(maxDelayTF.text)*60*60*1000);
            totalHoures+=userHoures ;
            reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+' Hrs\n');
 		   /*var reportL:uint = userReports[i].dayToDateReport.length ;
