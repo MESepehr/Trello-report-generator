@@ -44,12 +44,21 @@ public class BoardReport extends MovieClip{
 	
 	private var fromDate:Date,
 				toDate:Date ;
+				
+	private var repostDiagram:MovieClip ;
+	
+	private var piDiagram:MovieClip ;
 
     public function BoardReport() {
         super() ;
         urlField = Obj.get("url_txt",this) ;
         getReportMC = Obj.get("get_report_mc",this) ;
         reportTF = Obj.get("report_txt",this);
+		
+		repostDiagram = Obj.get("diagram_mc",this);
+		repostDiagram.visible = false ;
+		piDiagram = Obj.get("pi_mc",this);
+		piDiagram.visible = false ;
 		
 		fromDate = new Date(0);
 		toDate = new Date();
@@ -181,12 +190,28 @@ public class BoardReport extends MovieClip{
 		
        reportTF.text = '' ;
        var totalHoures:Number = 0 ;
+	   this.graphics.clear();
+	   
+	   const houreUnit:uint = 60*60*1000 ;
+	   
        for(var i:int = 0 ; i<userReports.length ; i++)
        {
            var userHoures:Number = userReports[i].getHoures(fromDate,toDate);
            totalHoures+=userHoures ;
            reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+' Hrs\n');
+		   /*var reportL:uint = userReports[i].dayToDateReport.length ;
+		   this.graphics.lineStyle(0,0);
+		   this.graphics.moveTo(repostDiagram.x,repostDiagram.y+repostDiagram.height);
+		   var W:Number = repostDiagram.width ;
+		   var deltaW:Number = W/reportL ;
+		   var H:Number = repostDiagram.height ;
+		   for(var j:int = 0 ; j<reportL ; j++)
+		   {
+			   this.graphics.lineTo(repostDiagram.x+j*deltaW,repostDiagram.y+H-((userReports[i].dayToDateReport[j]/(24*houreUnit))*H));
+		   }*/
        }
+	   
+	   
         reportTF.appendText("Total houres on project : "+totalHoures.toString()+' Hrs');
     }
 }

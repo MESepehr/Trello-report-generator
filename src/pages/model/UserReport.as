@@ -15,6 +15,9 @@ public class UserReport {
     private const houreUnit:uint = 1000*60*60 ;
 
     private const maxUnit:uint = houreUnit*3.5 ;
+	
+	/**This variable will generate when you call getHoures once. it is based on miliseconds*/
+	public var dayToDateReport:Vector.<Number> ;
 
     public function UserReport() {
     }
@@ -23,9 +26,12 @@ public class UserReport {
     {
 		trace("Control date : "+fromDate);
         var lastTime:Number = 0 ;
+		var lastDate:Date ;
         var totalTime:Number = 0 ;
         var currentTime:Number = 0 ;
+		var currentDate:Date ;
         trace(userName+" got "+userReports.length+" tasks");
+		dayToDateReport = new Vector.<Number>();
         for(var i:int = userReports.length-1 ; i>=0 ; i--)
         {
 			if(userReports[i].date.time<fromDate.time)
@@ -37,9 +43,11 @@ public class UserReport {
 				break ;
 			}
             currentTime = userReports[i].date.valueOf();
+			currentDate = userReports[i].date ;
             if(lastTime==0)
             {
                 //First task
+				dayToDateReport.push(0);
             }
             else
             {
@@ -48,15 +56,20 @@ public class UserReport {
 				if(deltaTime>maxUnit)
 				{
 					totalTime+=houreUnit ;
+					dayToDateReport[dayToDateReport.length-1]+=houreUnit ;
+					dayToDateReport.push(0);
 				}
 				else
 				{
 	                totalTime += deltaTime ;
+					dayToDateReport[dayToDateReport.length-1]+=deltaTime ;
 				}
                 //trace(">>"+deltaTime+' >>>> '+(deltaTime/houreUnit));
             }
             lastTime = currentTime ;
+			lastDate = currentDate ;
         }
+		trace("Day raeport is : "+dayToDateReport);
         //trace(userName+" saved taskes : "+totalTime);
 		if(currentTime!=0)
         	totalTime+=houreUnit;
