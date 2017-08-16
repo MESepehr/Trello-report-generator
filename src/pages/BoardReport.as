@@ -7,11 +7,14 @@ package pages
 import dataManager.GlobalStorage;
 
 import flash.display.MovieClip;
+import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.system.System;
 import flash.text.TextField;
 
 import pages.model.UserReport;
+
+import popForm.PopFieldDate;
 
 import restDoaService.RestDoaEvent;
 
@@ -33,14 +36,33 @@ public class BoardReport extends MovieClip{
     private var reportTF:TextField ;
 
     private const reportPageSize:uint = 1000 ;
+	
+	private var fromMC:PopFieldDate,
+				toMC:PopFieldDate;
 
     private var userReports:Vector.<UserReport> ;
+	
+	private var fromDate:Date,
+				toDate:Date ;
 
     public function BoardReport() {
         super() ;
         urlField = Obj.get("url_txt",this) ;
         getReportMC = Obj.get("get_report_mc",this) ;
         reportTF = Obj.get("report_txt",this);
+		
+		fromDate = new Date(0);
+		toDate = new Date();
+		trace("From date is : "+fromDate);
+		trace("To date is : "+toDate);
+		
+		fromMC = Obj.get("from_mc",this);
+		toMC = Obj.get("to_mc",this);
+		
+		fromMC.setUp("From:",fromDate,true);
+		toMC.setUp("To:",toDate,true);
+		
+		fromMC.addEventListener(Event.CHANGE,updateFromToDateAndReport);
 
         boardURL = GlobalStorage.load(id_boardURL) ;
         if(boardURL==null)
@@ -51,9 +73,20 @@ public class BoardReport extends MovieClip{
 
         getReportMC.buttonMode = true ;
         getReportMC.addEventListener(MouseEvent.CLICK, getReport);
-
     }
-
+	
+	protected function updateFromToDateAndReport(event:Event):void
+	{
+		trace("Date updated");
+		if(fromMC.data!=null && toMC.data!=null)
+		{
+			fromDate = fromMC.data ;
+			toDate = toMC.data ;
+			
+			generateReport(false);
+		}
+	}
+	
     private function getReport(event:MouseEvent):void
     {
         //      https://trello.com/b/JDJxNfgj/azta-bazar
@@ -82,7 +115,8 @@ public class BoardReport extends MovieClip{
         }
     }
 
-    private function reportLoaded(event:RestDoaEvent):void {
+    private function reportLoaded(event:RestDoaEvent):void 
+	{
         var l:int = service_getBoardActivitis.data.length ;
         var currentReport:GetBoardActionsRespond ;
         var foundedReportUnit:UserReport ;
@@ -134,12 +168,22 @@ public class BoardReport extends MovieClip{
         }
     }
 
-    private function generateReport():void {
+    private function generateReport(resetDate:Boolean=true):void
+	{
+		if(resetDate)
+		{
+			fromDate = new Date(0);
+			toDate = new Date();
+			
+			fromMC.update(fromDate);
+			toMC.update(toDate);
+		}
+		
        reportTF.text = '' ;
        var totalHoures:Number = 0 ;
        for(var i:int = 0 ; i<userReports.length ; i++)
        {
-           var userHoures:Number = userReports[i].getHoures();
+           var userHoures:Number = userReports[i].getHoures(fromDate,toDate);
            totalHoures+=userHoures ;
            reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+' Hrs\n');
        }

@@ -19,14 +19,23 @@ public class UserReport {
     public function UserReport() {
     }
 
-    public function getHoures():Number
+    public function getHoures(fromDate:Date,toDate:Date):Number
     {
+		trace("Control date : "+fromDate);
         var lastTime:Number = 0 ;
         var totalTime:Number = 0 ;
-        var currentTime:Number ;
+        var currentTime:Number = 0 ;
         trace(userName+" got "+userReports.length+" tasks");
         for(var i:int = userReports.length-1 ; i>=0 ; i--)
         {
+			if(userReports[i].date.time<fromDate.time)
+			{
+				continue ;
+			}
+			else if(userReports[i].date.time>toDate.time)
+			{
+				break ;
+			}
             currentTime = userReports[i].date.valueOf();
             if(lastTime==0)
             {
@@ -49,7 +58,8 @@ public class UserReport {
             lastTime = currentTime ;
         }
         //trace(userName+" saved taskes : "+totalTime);
-        totalTime+=houreUnit;
+		if(currentTime!=0)
+        	totalTime+=houreUnit;
         //trace(userName+" last taskes : "+totalTime);
         return Math.round((totalTime/houreUnit));
     }
