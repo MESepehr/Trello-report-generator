@@ -49,7 +49,8 @@ public class BoardReport extends MovieClip{
 	
 	private var piDiagram:MovieClip ;
 	
-	private var maxDelayTF:TextField ;
+	private var maxDelayTF:TextField,
+				minTaskTimeTF:TextField;
 	
 	private var reGenerateMC:MovieClip ;
 
@@ -65,6 +66,7 @@ public class BoardReport extends MovieClip{
 		reGenerateMC.visible = false ;
 		
 		maxDelayTF = Obj.get("delay_mc",this);
+		minTaskTimeTF = Obj.get("min_mc",this);
 		
 		repostDiagram = Obj.get("diagram_mc",this);
 		repostDiagram.visible = false ;
@@ -217,7 +219,7 @@ public class BoardReport extends MovieClip{
 	   
        for(var i:int = 0 ; i<userReports.length ; i++)
        {
-           var userHoures:Number = userReports[i].getHoures(fromDate,toDate,Number(maxDelayTF.text)*60*60*1000);
+           var userHoures:Number = userReports[i].getHoures(fromDate,toDate,Number(maxDelayTF.text)*60*60*1000,Number(minTaskTimeTF.text)*60*60*1000);
            totalHoures+=userHoures ;
            reportTF.appendText(userReports[i].userName+' : '+userHoures.toString()+' Hrs\n');
 		   /*var reportL:uint = userReports[i].dayToDateReport.length ;
