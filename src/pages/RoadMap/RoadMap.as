@@ -10,6 +10,9 @@ package pages.RoadMap
     import contents.alert.Alert;
     import diagrams.dataGrid.DataGrid;
     import appManager.displayContentElemets.TextParag;
+    import flash.display.BitmapData;
+    import flash.filesystem.File;
+    import flash.geom.Matrix;
 
     public class RoadMap extends MovieClip
     {
@@ -26,9 +29,13 @@ package pages.RoadMap
 
         private var chartMC:MovieClip ;
 
+        
+
         public function RoadMap()
         {
             super();
+
+            UnicodeStatic.deactiveConvertor = false ;
 
             urlField = Obj.get("url_txt",this) ;
             loadReportsButton = Obj.get("get_report_mc",this) ;
@@ -72,21 +79,68 @@ package pages.RoadMap
 
         private function reportLoaded(event:RestDoaEvent):void
         {
-            loadReportsButton.alpha = 1 ;
-            var j:int = 0 ;
-            var myTable:DataGrid = new DataGrid(9,13,chartMC.width,chartMC.height,0xffffff,0x000000);
-            this.addChild(myTable);
-            for(var i:int = 0 ; i<service_getBordList.data.length && i<9 ;i++)
+            var captureIndex:uint = 1 ;
+            function captureTable():void
             {
-                if(j==0)
-                {
-                    var parag:TextParag = new TextParag();
-                    myTable.addContent(parag,i,j,1,1,0x000000,0xeeeeee,1);
-                    parag.setUp(service_getBordList.data[i].name,true,false,false,false,false,false,false,false,true,true,false);
-                }
+                var bitmapdata:BitmapData = new BitmapData(2*(chartMC.width+1),2*(chartMC.height+1),false,0xffffffff);
+                var matr:Matrix = new Matrix();
+                matr.scale(2,2);
+                bitmapdata.draw(myTable,matr);
+                var imageTarget:File = File.desktopDirectory.resolvePath('RoadMap'+captureIndex+'.png');
+                FileManager.saveFile(imageTarget,BitmapEffects.createPNG(bitmapdata));
+                captureIndex++;
             }
+
+
+            loadReportsButton.alpha = 1 ;
+            var maxH:uint = 11 ;
+            var maxW:uint = 9 ;
+            //var i:int = 0;
+            var myTable:DataGrid = new DataGrid(Math.min(maxW,service_getBordList.data.length),maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
+            this.addChild(myTable) ;
             myTable.x = chartMC.x ;
             myTable.y = chartMC.y ;
+            var minus:uint = 0 ;
+            for(var j:int = -1 ; true ; j++)
+            {
+                var canContinue:Boolean = false ;
+                for(var i:int = 0 ; i<service_getBordList.data.length && i<9 ;i++)
+                {
+                    var parag:TextParag = new TextParag() ;
+                    if(j==-1)
+                    {
+                        canContinue = true ;
+                        myTable.addContent(parag,i,j,1,1,0x000000,0xeeeeee,0) ;
+                        parag.setUp(service_getBordList.data[i].name,true,false,false,false,false,true,false,false,false,true,true) ;
+                    }
+                    else
+                    {
+                        if(service_getBordList.data[i].cards.length>j+minus)
+                        {
+                            canContinue = true ;
+                            parag.setUp(service_getBordList.data[i].cards[j+minus].name,true,false,false,false,false,true,false,false,true,true);
+                        }   
+                        myTable.addContent(parag,i,j,1,1,0x000000,0xffffff,0) ;
+                    }
+                }
+                if(canContinue==false)
+                {
+                    break;
+                }
+                if(j>=maxH)
+                {
+                    captureTable();
+                    Obj.remove(myTable);
+                    minus+=maxH-1;
+                    j=-2;
+                    myTable = new DataGrid(Math.min(maxW,service_getBordList.data.length),maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
+                    this.addChild(myTable) ;
+                    myTable.x = chartMC.x ;
+                    myTable.y = chartMC.y ;
+                }
+            }
+            captureTable();
+            
         }
 
         private function noNetToShowReport(event:RestDoaEvent):void

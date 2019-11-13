@@ -33,7 +33,7 @@ public class Main extends MovieClip {
     public function Main() {
        trace("Hello world!");
 	   
-	   //UnicodeStatic.deactiveConvertor = true ;
+	   UnicodeStatic.deactiveConvertor = true ;
 
         button1 = Obj.get("board_report_mc",this);
         button1.buttonMode = true ;
