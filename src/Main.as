@@ -15,14 +15,15 @@ import mteam.animation.Anim_jump;
 public class Main extends MovieClip {
 
     private var button1:MovieClip,
+                button2:MovieClip,
                 tockenField:TextField,
                 apiField:TextField,
 
                 apiHelp:MovieClip,
                 tockenHelp:MovieClip;
 
-    public static var apiKey:String ,
-                    tocken:String ;
+    public static var   apiKey:String ,
+                        tocken:String ;
 
     private const   id_key:String = "id_key",
                     id_tocken:String = "id_tocken";
@@ -32,11 +33,15 @@ public class Main extends MovieClip {
     public function Main() {
        trace("Hello world!");
 	   
-	   UnicodeStatic.deactiveConvertor = true ;
+	   //UnicodeStatic.deactiveConvertor = true ;
 
         button1 = Obj.get("board_report_mc",this);
         button1.buttonMode = true ;
         button1.addEventListener(MouseEvent.CLICK, openReportPage);
+
+        button2 = Obj.get("board_roadmap_mc",this);
+        button2.buttonMode = true ;
+        button2.addEventListener(MouseEvent.CLICK, openReportPage);
 
         apiHelp = Obj.get("apihelp_mc",this);
         apiHelp.buttonMode = true ;
@@ -97,8 +102,15 @@ public class Main extends MovieClip {
         GlobalStorage.save(id_tocken,tocken);
         trace("Success : "+apiKey,tocken);
 
-
-        this.gotoAndStop(2);
+        switch((event.currentTarget as MovieClip).name)
+        {
+            case 'board_report_mc':
+                this.gotoAndStop(2);
+                break;
+            case 'board_roadmap_mc':
+                this.gotoAndStop(3);
+                break;
+        }
     }
 
 }
