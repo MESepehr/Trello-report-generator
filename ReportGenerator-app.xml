@@ -32,7 +32,12 @@
     <aspectRatio>portrait</aspectRatio>
     <renderMode>auto</renderMode>
   </initialWindow>
-  <icon/>
+  <icon>
+    <image16x16>AppIconsForPublish/16.png</image16x16>
+    <image32x32>AppIconsForPublish/32.png</image32x32>
+    <image48x48>AppIconsForPublish/48.png</image48x48>
+    <image128x128>AppIconsForPublish/128.png</image128x128>
+  </icon>
   <customUpdateUI>false</customUpdateUI>
   <allowBrowserInvocation>false</allowBrowserInvocation>
 </application>

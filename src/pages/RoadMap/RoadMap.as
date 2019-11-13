@@ -13,6 +13,7 @@ package pages.RoadMap
     import flash.display.BitmapData;
     import flash.filesystem.File;
     import flash.geom.Matrix;
+    import flash.display.Sprite;
 
     public class RoadMap extends MovieClip
     {
@@ -29,7 +30,7 @@ package pages.RoadMap
 
         private var chartMC:MovieClip ;
 
-        
+        private var gridContainer:Sprite ;
 
         public function RoadMap()
         {
@@ -44,6 +45,12 @@ package pages.RoadMap
 
             chartMC = Obj.get("chart_mc",this);
             chartMC.visible = false ;
+
+            gridContainer = new Sprite();
+            this.addChild(gridContainer);
+            gridContainer.x = chartMC.x ;
+            gridContainer.y = chartMC.y;
+            new ScrollMT(gridContainer,chartMC.getBounds(this),null,true);
 
             boardURL = GlobalStorage.load(id_boardURL) ;
             if(boardURL==null)
@@ -96,10 +103,9 @@ package pages.RoadMap
             var maxH:uint = 11 ;
             var maxW:uint = 9 ;
             //var i:int = 0;
+            gridContainer.removeChildren();
             var myTable:DataGrid = new DataGrid(Math.min(maxW,service_getBordList.data.length),maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
-            this.addChild(myTable) ;
-            myTable.x = chartMC.x ;
-            myTable.y = chartMC.y ;
+            gridContainer.addChild(myTable) ;
             var minus:uint = 0 ;
             for(var j:int = -1 ; true ; j++)
             {
@@ -130,13 +136,12 @@ package pages.RoadMap
                 if(j>=maxH)
                 {
                     captureTable();
-                    Obj.remove(myTable);
                     minus+=maxH-1;
                     j=-2;
+                    var lastY:Number = myTable.y;
                     myTable = new DataGrid(Math.min(maxW,service_getBordList.data.length),maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
-                    this.addChild(myTable) ;
-                    myTable.x = chartMC.x ;
-                    myTable.y = chartMC.y ;
+                    gridContainer.addChild(myTable) ;
+                    myTable.y = lastY + chartMC.height ;
                 }
             }
             captureTable();
