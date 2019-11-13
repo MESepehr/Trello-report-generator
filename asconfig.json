@@ -1,0 +1,18 @@
+{
+	"type": "app",
+	"animateOptions": {
+		"file": ".\\ReportGenerator.fla"
+	},
+	"config": "airmobile",
+	"files": [
+		".\\src\\Main.as"
+	],
+	"compilerOptions": {
+		"source-path": [
+			"\\src",
+			"D:\\Sepehr\\gitHub\\sepehrEngine\\SaffronEngine",
+			"D:\\Sepehr\\gitHub\\ASPack"
+		],
+		"external-library-path": []
+	}
+}
