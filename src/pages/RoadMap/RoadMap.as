@@ -119,7 +119,7 @@ package pages.RoadMap
                         myTable.addContent(parag,i,j,i==maxW?1:3,1,0x000000,0xeeeeee,0) ;
                         if(i==maxW)
                         {
-                            parag.setUp('ردیف',true);
+                            parag.setUp('ردیف',true,false,false,false,false,false,false,false,true,true);
                         }
                         else
                         {
