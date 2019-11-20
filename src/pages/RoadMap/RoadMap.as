@@ -14,6 +14,7 @@ package pages.RoadMap
     import flash.filesystem.File;
     import flash.geom.Matrix;
     import flash.display.Sprite;
+    import diagrams.calender.MyShamsi;
 
     public class RoadMap extends MovieClip
     {
@@ -32,9 +33,20 @@ package pages.RoadMap
 
         private var gridContainer:Sprite ;
 
+
+        private var headerMC:MovieClip,
+                    dateTF:TextField,
+                    pageTF:TextField;
+
         public function RoadMap()
         {
             super();
+
+            headerMC = Obj.get("header_mc",this);
+            dateTF = Obj.get("date_txt",headerMC);
+            pageTF = Obj.get("page_mc",headerMC);
+
+            dateTF.text = MyShamsi.miladiToShamsi(new Date()).showStringFormat(false);
 
             UnicodeStatic.deactiveConvertor = false ;
 
@@ -89,10 +101,16 @@ package pages.RoadMap
             var captureIndex:uint = 1 ;
             function captureTable():void
             {
-                var bitmapdata:BitmapData = new BitmapData(2*(chartMC.width+1),2*(chartMC.height+1),false,0xffffffff);
+                const scale:Number = 2 ;
+                pageTF.text = captureIndex+"/"+maxPage;
+                var bitmapdata:BitmapData = new BitmapData(scale*(chartMC.width+1),scale*(chartMC.height+1)+scale*headerMC.height,false,0xffffffff);
                 var matr:Matrix = new Matrix();
-                matr.scale(2,2);
+                matr.scale(scale,scale);
+                matr.ty=headerMC.height*scale;
                 bitmapdata.draw(myTable,matr);
+                var matr2:Matrix = new Matrix();
+                matr2.scale(scale,scale);
+                bitmapdata.draw(headerMC,matr2);
                 var imageTarget:File = File.desktopDirectory.resolvePath('RoadMap'+captureIndex+'.png');
                 FileManager.saveFile(imageTarget,BitmapEffects.createPNG(bitmapdata));
                 captureIndex++;
@@ -103,13 +121,24 @@ package pages.RoadMap
             var maxH:uint = 6 ;
             var extraCharts:uint = 0 ;
             var maxW:uint = Math.min(service_getBordList.data.length,9) ;
+            var j:int = 0 ;
+            
+            //Calculate max page
+            var maxPage:uint = 0 ;
+            for(j=0;j<maxW;j++)
+            {
+                maxPage = Math.max(service_getBordList.data[j].cards.length);
+            }
+            maxPage = Math.ceil(maxPage/maxH)
+
+
             //var i:int = 0;
             gridContainer.removeChildren();
             var myTable:DataGrid = new DataGrid(maxW*3+1,maxH*3+1,chartMC.width,chartMC.height,0xffffff,0x000000) ;
             gridContainer.addChild(myTable) ;
            
             var minus:uint = 0 ;
-            for(var j:int = -1 ; true ; j++)
+            for(j = -1 ; true ; j++)
             {
                 var canContinue:Boolean = false ;
                 for(var i:int = 0 ; i<maxW+1 ;i++)
