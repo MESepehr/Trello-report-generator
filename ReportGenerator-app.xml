@@ -18,7 +18,7 @@
 -->
 <application xmlns="http://ns.adobe.com/air/application/32.0">
   <id>ReportGenerator</id>
-  <versionNumber>1.0</versionNumber>
+  <versionNumber>1.1</versionNumber>
   <filename>ReportGenerator</filename>
   <description/>
   <name>ReportGenerator</name>
