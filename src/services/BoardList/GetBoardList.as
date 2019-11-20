@@ -7,9 +7,9 @@ package services.BoardList
 		public var data:Vector.<GetBoardListRespond> = new Vector.<GetBoardListRespond>() ;
 		
 		/***/
-		public function GetBoardList(boardId:String)
+		public function GetBoardList(boardId:String,cash:Boolean=true,instanceOffline:Boolean=true)
 		{
-			super("https://api.trello.com/1/boards/"+boardId+"/lists", data, false, false, null, true);
+			super("https://api.trello.com/1/boards/"+boardId+"/lists", data, cash, instanceOffline, null, true);
 		}
 		
 		public function load(card_fields:String="all",cards:String="open",fields:String='all',filter:String='open'):void
