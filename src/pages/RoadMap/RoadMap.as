@@ -101,11 +101,13 @@ package pages.RoadMap
 
             loadReportsButton.alpha = 1 ;
             var maxH:uint = 7 ;
+            var extraCharts:uint = 0 ;
             var maxW:uint = Math.min(service_getBordList.data.length,9) ;
             //var i:int = 0;
             gridContainer.removeChildren();
             var myTable:DataGrid = new DataGrid(maxW*3+1,maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
             gridContainer.addChild(myTable) ;
+           
             var minus:uint = 0 ;
             for(var j:int = -1 ; true ; j++)
             {
@@ -144,7 +146,7 @@ package pages.RoadMap
                 {
                     break;
                 }
-                if(j>=maxH)
+                if(j+extraCharts>=maxH)
                 {
                     captureTable();
                     minus+=maxH-1;
@@ -153,6 +155,7 @@ package pages.RoadMap
                     myTable = new DataGrid(maxW*3+1,maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
                     gridContainer.addChild(myTable) ;
                     myTable.y = lastY + chartMC.height ;
+                    extraCharts++;
                 }
             }
             captureTable();
