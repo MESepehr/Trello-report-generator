@@ -100,33 +100,44 @@ package pages.RoadMap
 
 
             loadReportsButton.alpha = 1 ;
-            var maxH:uint = 11 ;
-            var maxW:uint = 9 ;
+            var maxH:uint = 7 ;
+            var maxW:uint = Math.min(service_getBordList.data.length,9) ;
             //var i:int = 0;
             gridContainer.removeChildren();
-            var myTable:DataGrid = new DataGrid(Math.min(maxW,service_getBordList.data.length),maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
+            var myTable:DataGrid = new DataGrid(maxW*3+1,maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
             gridContainer.addChild(myTable) ;
             var minus:uint = 0 ;
             for(var j:int = -1 ; true ; j++)
             {
                 var canContinue:Boolean = false ;
-                for(var i:int = 0 ; i<service_getBordList.data.length && i<9 ;i++)
+                for(var i:int = 0 ; i<maxW+1 ;i++)
                 {
                     var parag:TextParag = new TextParag() ;
                     if(j==-1)
                     {
                         canContinue = true ;
-                        myTable.addContent(parag,i,j,1,1,0x000000,0xeeeeee,0) ;
-                        parag.setUp(service_getBordList.data[i].name,true,false,false,false,false,true,false,false,false,true,true) ;
+                        myTable.addContent(parag,i,j,i==maxW?1:3,1,0x000000,0xeeeeee,0) ;
+                        if(i==maxW)
+                        {
+                            parag.setUp('ردیف',true);
+                        }
+                        else
+                        {
+                            parag.setUp(service_getBordList.data[i].name,true,false,false,false,false,true,false,false,false,true,true) ;
+                        }
                     }
                     else
                     {
-                        if(service_getBordList.data[i].cards.length>j+minus)
+                        if(i==maxW)
+                        {
+                            parag.setUp(String(j+minus),false);
+                        }
+                        else if(service_getBordList.data[i].cards.length>j+minus)
                         {
                             canContinue = true ;
                             parag.setUp(service_getBordList.data[i].cards[j+minus].name,true,false,false,false,false,true,false,false,true,true);
                         }   
-                        myTable.addContent(parag,i,j,1,1,0x000000,0xffffff,0) ;
+                        myTable.addContent(parag,i,j,i==maxW?1:3,1,0x000000,0xffffff,0) ;
                     }
                 }
                 if(canContinue==false)
@@ -139,7 +150,7 @@ package pages.RoadMap
                     minus+=maxH-1;
                     j=-2;
                     var lastY:Number = myTable.y;
-                    myTable = new DataGrid(Math.min(maxW,service_getBordList.data.length),maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
+                    myTable = new DataGrid(maxW*3+1,maxH,chartMC.width,chartMC.height,0xffffff,0x000000) ;
                     gridContainer.addChild(myTable) ;
                     myTable.y = lastY + chartMC.height ;
                 }
