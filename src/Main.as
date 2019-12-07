@@ -16,6 +16,7 @@ public class Main extends MovieClip {
 
     private var button1:MovieClip,
                 button2:MovieClip,
+                button3:MovieClip,
                 tockenField:TextField,
                 apiField:TextField,
 
@@ -42,6 +43,10 @@ public class Main extends MovieClip {
         button2 = Obj.get("board_roadmap_mc",this);
         button2.buttonMode = true ;
         button2.addEventListener(MouseEvent.CLICK, openReportPage);
+
+        button3 = Obj.get("label_repost_mc",this);
+        button3.buttonMode = true ;
+        button3.addEventListener(MouseEvent.CLICK, openReportPage);
 
         apiHelp = Obj.get("apihelp_mc",this);
         apiHelp.buttonMode = true ;
@@ -109,6 +114,9 @@ public class Main extends MovieClip {
                 break;
             case 'board_roadmap_mc':
                 this.gotoAndStop(3);
+                break;
+            case 'label_repost_mc':
+                this.gotoAndStop(4);
                 break;
         }
     }

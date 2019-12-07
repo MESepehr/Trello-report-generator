@@ -1,5 +1,5 @@
-package pages.RoadMap
-//pages.RoadMap.RoadMap
+package pages
+//pages.LabelReport
 {
     import flash.display.MovieClip;
     import services.BoardList.GetBoardList;
@@ -16,7 +16,7 @@ package pages.RoadMap
     import flash.display.Sprite;
     import diagrams.calender.MyShamsi;
 
-    public class RoadMap extends MovieClip
+    public class LabelReport extends MovieClip
     {
 
         private var service_getBordList:GetBoardList ;
@@ -27,7 +27,7 @@ package pages.RoadMap
 
         private var boardURL:String;
 
-        private const id_boardURL:String = "id_boardURL3" ;
+        private const id_boardURL:String = "id_boardURL4" ;
 
         private var chartMC:MovieClip ;
 
@@ -38,7 +38,7 @@ package pages.RoadMap
                     dateTF:TextField,
                     pageTF:TextField;
 
-        public function RoadMap()
+        public function LabelReport()
         {
             super();
 
