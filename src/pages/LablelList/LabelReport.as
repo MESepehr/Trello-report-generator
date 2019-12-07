@@ -139,11 +139,13 @@ package pages.LablelList
                 {
                     var currentCard:GetBoardListRespondcardsModel = currentList.cards[i];
                     //maxRows = Math.max(currentCard.labels.length);
+                    //Alert.show("currentCard.labels.length "+currentCard.name+" : "+currentCard.labels.length);
                     for(var k:int = 0 ; k<currentCard.labels.length || (k==0 && currentCard.labels.length==0) ; k++)
                     {
                         var currentLabel:GetBoardListRespondcardsModelLabels 
                         if(currentCard.labels.length==0)
                         {
+                            //Alert.show("Create clean label");
                             currentLabel = new GetBoardListRespondcardsModelLabels();
                         }
                         else
@@ -181,7 +183,7 @@ package pages.LablelList
 
             //var i:int = 0;
             gridContainer.removeChildren();
-            var myTable:DataGrid = new DataGrid(maxW*3+1,maxH*3+1,chartMC.width,chartMC.height,0xffffff,0x000000) ;
+            var myTable:DataGrid = new DataGrid(maxW*3+1,maxH*3,chartMC.width,chartMC.height,0xffffff,0x000000) ;
             gridContainer.addChild(myTable) ;
            
             var minus:uint = 0 ;
@@ -195,25 +197,25 @@ package pages.LablelList
                 var secondH:uint = 3 ;
 
                 var parag:TextParag = new TextParag() ;
-                myTable.addContent(parag,0,j,firstW,secondH,0x000000,0xffffff,0) ;
+                myTable.addContent(parag,0,j-extraCharts,firstW,secondH,0x000000,0xffffff,0) ;
                 parag.setUp(chartList[j].getCartList(),true,false,false,false,false,false,false,false,true,true);
                 parag = new TextParag() ;
-                myTable.addContent(parag,firstW,j,secondW,secondH,0x000000,0xeeeeee,0) ;
+                myTable.addContent(parag,firstW,j-extraCharts,secondW,secondH,0x000000,0xeeeeee,0) ;
                 parag.setUp(chartList[j].label.name,true,false,false,false,false,false,false,false,true,true);
                 parag = new TextParag() ;
-                myTable.addContent(parag,firstW+secondW,j,1,secondH,0x000000,0xeeeeee,0) ;
+                myTable.addContent(parag,firstW+secondW,j-extraCharts,1,secondH,0x000000,0xeeeeee,0) ;
                 parag.setUp((j+1).toString(),true,false,false,false,false,false,false,false,true,true);
                 
-                if(j+extraCharts>=maxH)
+                if(j-extraCharts>=maxH-1)
                 {
                     captureTable();
                     minus+=maxH;
-                    j=-2;
+                    //j=0;
                     var lastY:Number = myTable.y;
-                    myTable = new DataGrid(maxW*3+1,maxH*3+1,chartMC.width,chartMC.height,0xffffff,0x000000) ;
+                    myTable = new DataGrid(maxW*3+1,maxH*3,chartMC.width,chartMC.height,0xffffff,0x000000) ;
                     gridContainer.addChild(myTable) ;
                     myTable.y = lastY + chartMC.height ;
-                    extraCharts++;
+                    extraCharts+=maxH;
                 }
             }
             captureTable();
