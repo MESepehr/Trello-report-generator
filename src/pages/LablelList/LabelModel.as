@@ -34,7 +34,7 @@ package pages.LablelList
             var text:String = '' ;
             for(var i:int = 0 ; i<myCards.length ; i++)
             {
-                text += myCards[i].name +'-';
+                text += myCards[i].name +'+';
             }
             if(text.length>0)
             {
