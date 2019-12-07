@@ -1,5 +1,5 @@
-package pages
-//pages.LabelReport
+package pages.LablelList
+//pages.LablelList.LabelReport
 {
     import flash.display.MovieClip;
     import services.BoardList.GetBoardList;
@@ -15,6 +15,10 @@ package pages
     import flash.geom.Matrix;
     import flash.display.Sprite;
     import diagrams.calender.MyShamsi;
+    import services.BoardList.GetBoardListRespondcardsModelLabels;
+    import services.BoardList.GetBoardListRespond;
+    import services.BoardList.GetBoardListRespondcardsModel;
+    import com.mteamapp.StringFunctions;
 
     public class LabelReport extends MovieClip
     {
@@ -111,7 +115,7 @@ package pages
                 var matr2:Matrix = new Matrix();
                 matr2.scale(scale,scale);
                 bitmapdata.draw(headerMC,matr2);
-                var imageTarget:File = File.desktopDirectory.resolvePath('RoadMap'+captureIndex+'.png');
+                var imageTarget:File = File.desktopDirectory.resolvePath('LabelReport'+captureIndex+'.png');
                 FileManager.saveFile(imageTarget,BitmapEffects.createPNG(bitmapdata));
                 captureIndex++;
             }
@@ -120,16 +124,59 @@ package pages
             loadReportsButton.alpha = 1 ;
             var maxH:uint = 6 ;
             var extraCharts:uint = 0 ;
-            var maxW:uint = Math.min(service_getBordList.data.length,9) ;
-            var j:int = 0 ;
+            var maxW:uint = 9 ;
+            var j:int = 0 ,i:int=0;
             
-            //Calculate max page
+            //Calculate max rows
+            //var maxRows:uint = 0 ;
             var maxPage:uint = 0 ;
-            for(j=0;j<maxW;j++)
+            var chartList:Vector.<LabelModel> = new Vector.<LabelModel>();
+            //var labelTemp:Array = [] ;
+            for(j=0;j<service_getBordList.data.length-1;j++)
             {
-                maxPage = Math.max(service_getBordList.data[j].cards.length);
+                var currentList:GetBoardListRespond = service_getBordList.data[j];
+                for(i=0;i<currentList.cards.length ; i++)
+                {
+                    var currentCard:GetBoardListRespondcardsModel = currentList.cards[i];
+                    //maxRows = Math.max(currentCard.labels.length);
+                    for(var k:int = 0 ; k<currentCard.labels.length || (k==0 && currentCard.labels.length==0) ; k++)
+                    {
+                        var currentLabel:GetBoardListRespondcardsModelLabels 
+                        if(currentCard.labels.length==0)
+                        {
+                            currentLabel = new GetBoardListRespondcardsModelLabels();
+                        }
+                        else
+                        {
+                            currentLabel = currentCard.labels[k];
+                        }
+                        
+                        var currentChartItem:LabelModel = null ;
+                        for(var l:int = 0 ; l<chartList.length ; l++)
+                        {
+                            if(chartList[l].label.id == currentLabel.id)
+                            {
+                                currentChartItem = chartList[l] ;
+                                //Alert.show("founded currentLabel : "+currentLabel.name+" vs "+currentLabel.id);
+                                break;
+                            }
+                        }
+                        if(currentChartItem==null)
+                        {
+                            //Alert.show("Didnt found"+currentLabel);
+                            currentChartItem = new LabelModel(currentLabel,null);
+                            chartList.push(currentChartItem);
+                        }
+                        currentChartItem.addCard(currentCard);
+                    }
+                }
             }
-            maxPage = Math.ceil(maxPage/maxH)
+            maxPage = Math.ceil(chartList.length/maxH);
+            function sortLabels(a:LabelModel,b:LabelModel):int
+            {
+                return StringFunctions.compairFarsiString(a.label.name,b.label.name);
+            }
+            chartList.sort(sortLabels);
 
 
             //var i:int = 0;
@@ -138,43 +185,25 @@ package pages
             gridContainer.addChild(myTable) ;
            
             var minus:uint = 0 ;
-            for(j = -1 ; true ; j++)
+            
+            for(j = 0 ; j<chartList.length ; j++)
             {
-                var canContinue:Boolean = false ;
-                for(var i:int = 0 ; i<maxW+1 ;i++)
-                {
-                    var parag:TextParag = new TextParag() ;
-                    if(j==-1)
-                    {
-                        canContinue = true ;
-                        myTable.addContent(parag,i,j,i==maxW?1:3,1,0x000000,0xeeeeee,0) ;
-                        if(i==maxW)
-                        {
-                            parag.setUp('ردیف',true,false,false,false,false,false,false,false,true,true);
-                        }
-                        else
-                        {
-                            parag.setUp(service_getBordList.data[i].name,true,false,false,false,false,true,false,false,false,true,true) ;
-                        }
-                    }
-                    else
-                    {
-                        if(i==maxW)
-                        {
-                            parag.setUp(String(j+minus),false);
-                        }
-                        else if(service_getBordList.data[i].cards.length>j+minus)
-                        {
-                            canContinue = true ;
-                            parag.setUp(service_getBordList.data[i].cards[j+minus].name,true,false,false,false,false,true,false,false,true,true);
-                        }   
-                        myTable.addContent(parag,i,j,i==maxW?1:3,3,0x000000,0xffffff,0) ;
-                    }
-                }
-                if(canContinue==false)
-                {
-                    break;
-                }
+                //var canContinue:Boolean = false ;
+                var firstW:uint = 18 ;
+                var total:uint = maxW*3+1;
+                var secondW:uint = total - firstW - 1 ;
+                var secondH:uint = 3 ;
+
+                var parag:TextParag = new TextParag() ;
+                myTable.addContent(parag,0,j,firstW,secondH,0x000000,0xffffff,0) ;
+                parag.setUp(chartList[j].getCartList(),true,false,false,false,false,false,false,false,true,true);
+                parag = new TextParag() ;
+                myTable.addContent(parag,firstW,j,secondW,secondH,0x000000,0xeeeeee,0) ;
+                parag.setUp(chartList[j].label.name,true,false,false,false,false,false,false,false,true,true);
+                parag = new TextParag() ;
+                myTable.addContent(parag,firstW+secondW,j,1,secondH,0x000000,0xeeeeee,0) ;
+                parag.setUp((j+1).toString(),true,false,false,false,false,false,false,false,true,true);
+                
                 if(j+extraCharts>=maxH)
                 {
                     captureTable();

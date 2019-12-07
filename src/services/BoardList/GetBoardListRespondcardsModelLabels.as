@@ -9,7 +9,7 @@ package services.BoardList
 		/**"idBoard":"5d021542f44bf37a7c391f6a"*/
 		public var idBoard:String ;
 		/**"name":"کاربرگ"*/
-		public var name:String ;
+		public var name:String = '' ;
 
 		
 		public function GetBoardListRespondcardsModelLabels()
