@@ -49,7 +49,7 @@ package services.BoardList
 		/**"isTemplate":"false"*/
 		public var isTemplate:Boolean ;
 		/**"labels":""*/
-		public var labels:Array = [] ;
+		public var labels:Vector.<GetBoardListRespondcardsModelLabels> = new Vector.<GetBoardListRespondcardsModelLabels>() ;
 		/**"limits":"[object Object]"*/
 		public var limits:GetBoardListRespondcardsModellimitsModel = new GetBoardListRespondcardsModellimitsModel()
 		/**"locationName":"null"*/
