@@ -173,7 +173,10 @@ package pages.LablelList
                     }
                 }
             }
-            maxPage = Math.ceil(chartList.length/maxH);
+            
+            maxPage = chartList.length;
+            maxPage = Math.ceil(maxPage/maxH);
+
             function sortLabels(a:LabelModel,b:LabelModel):int
             {
                 return StringFunctions.compairFarsiString(a.label.name,b.label.name);
@@ -206,7 +209,7 @@ package pages.LablelList
                 myTable.addContent(parag,firstW+secondW,j-extraCharts,1,secondH,0x000000,0xeeeeee,0) ;
                 parag.setUp((j+1).toString(),true,false,false,false,false,false,false,false,true,true);
                 
-                if(j-extraCharts>=maxH-1)
+                if(j-extraCharts>=maxH-1 && j+1<chartList.length)
                 {
                     captureTable();
                     minus+=maxH;
